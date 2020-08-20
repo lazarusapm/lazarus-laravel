@@ -1,0 +1,49 @@
+{
+  "name": "hotmeteor/tombstone-laravel",
+  "description": "Laravel package for Tombstone",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Adam Campbell",
+      "email": "adam@hotmeteor.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "ext-curl": "*",
+    "illuminate/support": "^6.0|^7.0",
+    "kitetail/zttp": "^0.6.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "~3.0",
+    "phpunit/phpunit": "^7|^8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tombstone\\Laravel\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tombstone\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Tombstone\\Laravel\\TombstoneServiceProvider"
+      ],
+      "aliases": {
+        "Tombstone": "Tombstone\\Laravel\\Facades\\Tombstone"
+      }
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  }
+}

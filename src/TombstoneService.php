@@ -2,47 +2,81 @@
 
 namespace Tombstone\Laravel;
 
-use Zttp\Zttp;
-
 class TombstoneService
 {
-    private const TOKEN_NAME = 'X-TOMBSTONE-TOKEN';
+    private const TOKEN_LENGTH = 60;
 
-    protected $config;
+    private const TOKEN_NAME = 'X-Tombstone-Token';
 
     private static $endpoint = 'https://mellow-beijing-wineivpw4qsr.vapor-farm-a1.com/api/log';
 
-    public function __construct(array $config)
+    protected $config;
+
+    public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    public function log(array $params): void
+    public function send(array $params)
     {
-        if ($this->shouldSend($params)) {
-            $this->send($this->filterParams($params));
+        dd($this->config);
+        if ($this->canSend($params)) {
+            $this->fireData($params);
         }
     }
 
-    protected function shouldSend(array $params): bool
+    public function canSend(array $params)
     {
-        return $this->config['enabled'] === true && !in_array($params['route'], $this->config['exclude'], true);
+        return $this->enabled()
+            && $this->configured()
+            && $this->hasValidData($params);
+    }
+
+    public function enabled(): bool
+    {
+        return isset($this->config['enabled']) && $this->config['enabled'] === true;
+    }
+
+    public function configured(): bool
+    {
+        return isset($this->config['token']) && strlen($this->config['token']) === self::TOKEN_LENGTH;
+    }
+
+    public function hasValidData(array $params): bool
+    {
+        return isset($params['route'])
+            && !empty($params['route'])
+            && !in_array($params['route'], $this->config['exclude'] ?? [], true);
     }
 
     protected function filterParams(array $params): array
     {
-        if (!$this->config['ips']) {
+        if (isset($this->config['ips']) && $this->config['ips'] === false) {
             unset($params['ips']);
         }
 
         return $params;
     }
 
-    protected function send(array $params): void
+    /**
+     * Fire and forget data.
+     */
+    protected function fireData(array $params): void
     {
-        Zttp::withHeaders([
-            'Accept' => 'application/json',
-            self::TOKEN_NAME => $this->config['token'],
-        ])->post(self::$endpoint, $params);
+        $parts = parse_url(self::$endpoint);
+        $data = json_encode($this->filterParams($params), 0);
+
+        $fp = fsockopen('tls://'.$parts['host'], 443, $errno, $errstr, 30);
+
+        $out = 'POST '.$parts['path']." HTTP/1.1\r\n";
+        $out .= 'Host: '.$parts['host']."\r\n";
+        $out .= "Content-Type: application/json\r\n";
+        $out .= 'Content-Length: '.strlen($data)."\r\n";
+        $out .= self::TOKEN_NAME.': '.$this->config['token']."\r\n";
+        $out .= "Connection: Close\r\n\r\n";
+        $out .= $data;
+
+        fwrite($fp, $out);
+        fclose($fp);
     }
 }

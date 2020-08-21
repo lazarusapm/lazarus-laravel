@@ -10,12 +10,10 @@
   ],
   "require": {
     "php": "^7.2",
-    "ext-curl": "*",
-    "illuminate/support": "^6.0|^7.0",
-    "kitetail/zttp": "^0.6.0"
+    "illuminate/support": "^6.0|^7.0"
   },
   "require-dev": {
-    "orchestra/testbench": "~3.0",
+    "orchestra/testbench": "^3.0|^4.0",
     "phpunit/phpunit": "^7|^8"
   },
   "autoload": {

@@ -12,10 +12,9 @@ class TombstoneServiceProvider extends ServiceProvider
     {
         $configPath = __DIR__.'/../config/tombstone.php';
 
-        $this->publishes(
-            [$configPath => $this->configPath('tombstone.php')],
-            'config'
-        );
+        $this->publishes([
+            $configPath => $this->configPath('tombstone.php'),
+        ], 'tombstone');
 
         $this->mergeConfigFrom($configPath, 'tombstone');
 
@@ -26,16 +25,18 @@ class TombstoneServiceProvider extends ServiceProvider
     {
         $this->app->alias('Tombstone', Tombstone::class);
 
-        $this->app->singleton(TombstoneService::class, function () {
-            return new TombstoneService(config('tombstone'));
+        $this->app->singleton(TombstoneLogger::class, function () {
+            return new TombstoneLogger(
+                new TombstoneService(config('tombstone'))
+            );
         });
 
-        $this->app->bind('tombstone', TombstoneService::class);
+        $this->app->bind('tombstone', TombstoneLogger::class);
     }
 
     public function provides(): array
     {
-        return ['tombstone', TombstoneService::class];
+        return ['tombstone', TombstoneLogger::class];
     }
 
     protected function registerMiddleware()

@@ -1,17 +1,17 @@
 <?php
 
-namespace Tombstone\Laravel;
+namespace Lazarus\Laravel;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Tombstone\Laravel\Facades\Tombstone;
+use Lazarus\Laravel\Facades\Lazarus;
 
 class LogRoute
 {
     public function handle(Request $request, Closure $next)
     {
-        Tombstone::log([
+        Lazarus::log([
             'route' => Route::currentRouteName(),
             'ip_address' => $request->ip(),
             'timestamp' => now()->toDateTimeString(),

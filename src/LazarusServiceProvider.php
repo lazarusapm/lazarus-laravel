@@ -1,42 +1,42 @@
 <?php
 
-namespace Tombstone\Laravel;
+namespace Lazarus\Laravel;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
-use Tombstone\Laravel\Facades\Tombstone;
+use Lazarus\Laravel\Facades\Lazarus;
 
-class TombstoneServiceProvider extends ServiceProvider
+class LazarusServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $configPath = __DIR__.'/../config/tombstone.php';
+        $configPath = __DIR__.'/../config/lazarus.php';
 
         $this->publishes([
-            $configPath => $this->configPath('tombstone.php'),
-        ], 'tombstone');
+            $configPath => $this->configPath('lazarus.php'),
+        ], 'lazarus');
 
-        $this->mergeConfigFrom($configPath, 'tombstone');
+        $this->mergeConfigFrom($configPath, 'lazarus');
 
         $this->registerMiddleware();
     }
 
     public function register()
     {
-        $this->app->alias('Tombstone', Tombstone::class);
+        $this->app->alias('Lazarus', Lazarus::class);
 
-        $this->app->singleton(TombstoneLogger::class, function () {
-            return new TombstoneLogger(
-                new TombstoneService(config('tombstone'))
+        $this->app->singleton(LazarusLogger::class, function () {
+            return new LazarusLogger(
+                new LazarusService(config('lazarus'))
             );
         });
 
-        $this->app->bind('tombstone', TombstoneLogger::class);
+        $this->app->bind('lazarus', LazarusLogger::class);
     }
 
     public function provides(): array
     {
-        return ['tombstone', TombstoneLogger::class];
+        return ['lazarus', LazarusLogger::class];
     }
 
     protected function registerMiddleware()

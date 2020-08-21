@@ -1,6 +1,6 @@
 {
-  "name": "hotmeteor/tombstone-laravel",
-  "description": "Laravel package for Tombstone",
+  "name": "hotmeteor/lazarus-laravel",
+  "description": "Laravel package for logging to Lazarus",
   "type": "library",
   "authors": [
     {
@@ -18,12 +18,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Tombstone\\Laravel\\": "src"
+      "Lazarus\\Laravel\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tombstone\\Tests\\": "tests/"
+      "Lazarus\\Tests\\": "tests/"
     }
   },
   "scripts": {
@@ -32,10 +32,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Tombstone\\Laravel\\TombstoneServiceProvider"
+        "Lazarus\\Laravel\\LazarusServiceProvider"
       ],
       "aliases": {
-        "Tombstone": "Tombstone\\Laravel\\Facades\\Tombstone"
+        "Lazarus": "Lazarus\\Laravel\\Facades\\Lazarus"
       }
     }
   },

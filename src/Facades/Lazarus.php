@@ -1,13 +1,13 @@
 <?php
 
-namespace Tombstone\Laravel\Facades;
+namespace Lazarus\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Tombstone extends Facade
+class Lazarus extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'tombstone';
+        return 'lazarus';
     }
 }

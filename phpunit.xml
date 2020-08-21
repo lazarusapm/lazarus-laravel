@@ -24,7 +24,7 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
-        <server name="TOMBSTONE_ENABLED" value="true"/>
-        <server name="TOMBSTONE_TOKEN" value=""/>
+        <server name="LAZARUS_ENABLED" value="true"/>
+        <server name="LAZARUS_TOKEN" value=""/>
     </php>
 </phpunit>

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tombstone\Laravel;
+namespace Lazarus\Laravel;
 
-class TombstoneLogger
+class LazarusLogger
 {
     protected $service;
 
-    public function __construct(TombstoneService $service)
+    public function __construct(LazarusService $service)
     {
         $this->service = $service;
     }

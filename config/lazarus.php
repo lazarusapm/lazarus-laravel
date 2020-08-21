@@ -3,25 +3,25 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Enable Tombstone
+    | Enable Lazarus
     |--------------------------------------------------------------------------
     |
-    | Here you may specify if Tombstone should be enabled.
+    | Here you may specify if Lazarus should be enabled.
     |
     */
 
-    'enabled' => env('TOMBSTONE_ENABLED', true),
+    'enabled' => env('LAZARUS_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
     | Token
     |--------------------------------------------------------------------------
     |
-    | Here you must set your unique Tombstone project token.
+    | Here you must set your unique Lazarus project token.
     |
     */
 
-    'token' => env('TOMBSTONE_TOKEN'),
+    'token' => env('LAZARUS_TOKEN'),
 
     /*
     |--------------------------------------------------------------------------

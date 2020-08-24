@@ -19,7 +19,6 @@ class LazarusService
 
     public function send(array $params)
     {
-        dd($this->config);
         if ($this->canSend($params)) {
             $this->fireData($params);
         }

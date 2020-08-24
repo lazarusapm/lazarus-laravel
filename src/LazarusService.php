@@ -8,7 +8,7 @@ class LazarusService
 
     private const TOKEN_NAME = 'X-Lazarus-Token';
 
-    private static $endpoint = 'https://mellow-beijing-wineivpw4qsr.vapor-farm-a1.com/api/log';
+    private static $endpoint = 'https://heylazarus.com/api/log';
 
     protected $config;
 

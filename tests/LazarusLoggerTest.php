@@ -4,7 +4,6 @@ namespace Lazarus\Tests;
 
 use Lazarus\Laravel\LazarusLogger;
 use Lazarus\Laravel\LazarusService;
-use Orchestra\Testbench\TestCase;
 
 class LazarusLoggerTest extends TestCase
 {

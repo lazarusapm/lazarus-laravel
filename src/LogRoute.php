@@ -13,6 +13,7 @@ class LogRoute
     {
         Lazarus::log([
             'route' => Route::currentRouteName(),
+            'url' => $request->url(),
             'ip_address' => $request->ip(),
             'timestamp' => now()->toDateTimeString(),
         ]);

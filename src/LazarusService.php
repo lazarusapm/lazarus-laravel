@@ -2,6 +2,8 @@
 
 namespace Lazarus\Laravel;
 
+use Exception;
+
 class LazarusService
 {
     private const TOKEN_LENGTH = 60;
@@ -62,20 +64,24 @@ class LazarusService
      */
     protected function fireData(array $params): void
     {
-        $parts = parse_url(self::$endpoint);
-        $data = json_encode($this->filterParams($params), 0);
+        try {
+            $parts = parse_url(self::$endpoint);
+            $data = json_encode($this->filterParams($params), 0);
 
-        $fp = fsockopen('tls://'.$parts['host'], 443, $errno, $errstr, 30);
+            $fp = fsockopen('tls://'.$parts['host'], 443, $errno, $errstr, 30);
 
-        $out = 'POST '.$parts['path']." HTTP/1.1\r\n";
-        $out .= 'Host: '.$parts['host']."\r\n";
-        $out .= "Content-Type: application/json\r\n";
-        $out .= 'Content-Length: '.strlen($data)."\r\n";
-        $out .= self::TOKEN_NAME.': '.$this->config['token']."\r\n";
-        $out .= "Connection: Close\r\n\r\n";
-        $out .= $data;
+            $out = 'POST '.$parts['path']." HTTP/1.1\r\n";
+            $out .= 'Host: '.$parts['host']."\r\n";
+            $out .= "Content-Type: application/json\r\n";
+            $out .= 'Content-Length: '.strlen($data)."\r\n";
+            $out .= self::TOKEN_NAME.': '.$this->config['token']."\r\n";
+            $out .= "Connection: Close\r\n\r\n";
+            $out .= $data;
 
-        fwrite($fp, $out);
-        fclose($fp);
+            fwrite($fp, $out);
+            fclose($fp);
+        } catch (Exception $e) {
+            // fail silently for now
+        }
     }
 }

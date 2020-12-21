@@ -9,12 +9,13 @@
     }
   ],
   "require": {
-    "php": "^7.2",
-    "illuminate/support": "^6.0|^7.0"
+    "php": "^7.3|^8.0",
+    "ext-zip": "*",
+    "illuminate/support": "^6.0|^7.0|^8.0"
   },
   "require-dev": {
-    "orchestra/testbench": "^3.0|^4.0",
-    "phpunit/phpunit": "^7|^8"
+    "orchestra/testbench": "^3.0|^4.0|^5.0",
+    "phpunit/phpunit": "^7|^8|^9"
   },
   "autoload": {
     "psr-4": {

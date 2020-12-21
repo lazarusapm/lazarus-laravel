@@ -4,20 +4,15 @@ namespace Lazarus\Laravel;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
+use Lazarus\Laravel\Commands\TransferLazarusFile;
 use Lazarus\Laravel\Facades\Lazarus;
 
 class LazarusServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $configPath = __DIR__.'/../config/lazarus.php';
-
-        $this->publishes([
-            $configPath => $this->configPath('lazarus.php'),
-        ], 'lazarus');
-
-        $this->mergeConfigFrom($configPath, 'lazarus');
-
+        $this->configure();
+        $this->registerCommands();
         $this->registerMiddleware();
     }
 
@@ -37,6 +32,26 @@ class LazarusServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return ['lazarus', LazarusLogger::class];
+    }
+
+    protected function configure()
+    {
+        $configPath = __DIR__.'/../config/lazarus.php';
+
+        $this->publishes([
+            $configPath => $this->configPath('lazarus.php'),
+        ], 'lazarus');
+
+        $this->mergeConfigFrom($configPath, 'lazarus');
+    }
+
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                TransferLazarusFile::class,
+            ]);
+        }
     }
 
     protected function registerMiddleware()

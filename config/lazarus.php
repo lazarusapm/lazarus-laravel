@@ -1,6 +1,7 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Enable Lazarus
@@ -45,5 +46,28 @@ return [
     |
     */
 
-    'ips' => true,
+    'ips' => env('LAZARUS_LOG_IPS', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Include Device Info
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify if visitor device information should be logged.
+    |
+    */
+
+    'devices' => env('LAZARUS_LOG_DEVICES', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify a custom endpoint for debugging purposes.
+    | *Caution!* Lazarus produces a _lot_ of requests!
+    |
+    */
+
+    'endpoint' => env('LAZARUS_ENDPOINT'),
 ];

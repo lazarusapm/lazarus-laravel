@@ -5,7 +5,7 @@ namespace Lazarus\Tests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Lazarus\Laravel\Facades\Lazarus;
+use Lazarus\Facades\Lazarus;
 
 class LogRouteTest extends TestCase
 {

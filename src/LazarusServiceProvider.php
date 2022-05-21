@@ -1,21 +1,18 @@
 <?php
 
-namespace Lazarus\Laravel;
+namespace Lazarus;
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
-use Lazarus\Laravel\Commands\TransferLazarusFile;
-use Lazarus\Laravel\Facades\Lazarus;
+use Lazarus\Commands\CreateMiddleware;
+use Lazarus\Commands\TransferLazarusFile;
+use Lazarus\Facades\Lazarus;
 
 class LazarusServiceProvider extends ServiceProvider
 {
-    public function boot()
-    {
-        $this->configure();
-        $this->registerCommands();
-        $this->registerMiddleware();
-    }
-
+    /**
+     * @return void
+     */
     public function register()
     {
         $this->app->alias('Lazarus', Lazarus::class);
@@ -29,11 +26,26 @@ class LazarusServiceProvider extends ServiceProvider
         $this->app->bind('lazarus', LazarusLogger::class);
     }
 
+    /**
+     * @return void
+     */
+    public function boot()
+    {
+        $this->configure();
+        $this->registerCommands();
+    }
+
+    /**
+     * @return string[]
+     */
     public function provides(): array
     {
         return ['lazarus', LazarusLogger::class];
     }
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $configPath = __DIR__.'/../config/lazarus.php';
@@ -45,20 +57,23 @@ class LazarusServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($configPath, 'lazarus');
     }
 
+    /**
+     * @return void
+     */
     protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                CreateMiddleware::class,
                 TransferLazarusFile::class,
             ]);
         }
     }
 
-    protected function registerMiddleware()
-    {
-        $this->app[Kernel::class]->appendMiddlewareToGroup('api', LogRoute::class);
-    }
-
+    /**
+     * @param string $path
+     * @return string
+     */
     protected function configPath(string $path = ''): string
     {
         if (function_exists('config_path')) {

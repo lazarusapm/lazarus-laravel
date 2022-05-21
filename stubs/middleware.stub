@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Request;
+use Lazarus\Middleware;
+
+class {{ class }} extends Middleware
+{
+    /**
+     * Defines the values that are logged by default.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function attributes(Request $request): array
+    {
+        return array_merge(parent::share($request), [
+            //
+        ]);
+    }
+}

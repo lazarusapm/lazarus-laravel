@@ -1,6 +1,6 @@
 <?php
 
-namespace Lazarus\Laravel;
+namespace Lazarus;
 
 use Exception;
 
@@ -10,39 +10,60 @@ class LazarusService
 
     private const TOKEN_NAME = 'X-Lazarus-Token';
 
-    private static $endpoint = 'https://heylazarus.com/api/log';
+    /**
+     * @var string
+     */
+    private static string $endpoint = 'https://heylazarus.com/api/log';
 
-    protected $config;
-
-    public function __construct(array $config = [])
+    /**
+     * @param array $config
+     */
+    public function __construct(protected array $config = [])
     {
-        $this->config = $config;
     }
 
-    public function send(array $params)
+    /**
+     * @param array $params
+     * @return void
+     */
+    public function send(array $params): void
     {
         if ($this->canSend($params)) {
             $this->fireData($params);
         }
     }
 
-    public function canSend(array $params)
+    /**
+     * @param array $params
+     * @return bool
+     */
+    public function canSend(array $params): bool
     {
         return $this->enabled()
             && $this->configured()
             && $this->hasValidData($params);
     }
 
+    /**
+     * @return bool
+     */
     public function enabled(): bool
     {
         return isset($this->config['enabled']) && $this->config['enabled'] === true;
     }
 
+    /**
+     * @return bool
+     */
     public function configured(): bool
     {
         return isset($this->config['token']) && strlen($this->config['token']) === self::TOKEN_LENGTH;
     }
 
+    /**
+     * @param array $params
+     * @return bool
+     */
     public function hasValidData(array $params): bool
     {
         return isset($params['route'])
@@ -50,6 +71,10 @@ class LazarusService
             && !in_array($params['route'], $this->config['exclude'] ?? [], true);
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     protected function filterParams(array $params): array
     {
         if (isset($this->config['ips']) && $this->config['ips'] === false) {
@@ -59,13 +84,19 @@ class LazarusService
         return $params;
     }
 
+
     /**
      * Fire and forget data.
+     *
+     * @param array $params
+     * @return void
      */
     protected function fireData(array $params): void
     {
         try {
-            $parts = parse_url(self::$endpoint);
+            $endpoint = config('lazarus.endpoint') ?? self::$endpoint;
+
+            $parts = parse_url($endpoint);
             $data = json_encode($this->filterParams($params), 0);
 
             $fp = fsockopen('tls://'.$parts['host'], 443, $errno, $errstr, 30);

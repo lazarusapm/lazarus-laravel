@@ -1,6 +1,6 @@
 <?php
 
-namespace Lazarus\Laravel\Commands;
+namespace Lazarus\Commands;
 
 use Exception;
 use Illuminate\Console\Command;

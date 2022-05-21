@@ -1,16 +1,20 @@
 <?php
 
-namespace Lazarus\Laravel;
+namespace Lazarus;
 
 class LazarusLogger
 {
-    protected $service;
-
-    public function __construct(LazarusService $service)
+    /**
+     * @param LazarusService $service
+     */
+    public function __construct(protected LazarusService $service)
     {
-        $this->service = $service;
     }
 
+    /**
+     * @param array $params
+     * @return void
+     */
     public function log(array $params): void
     {
         $this->service->send($params);

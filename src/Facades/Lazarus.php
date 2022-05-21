@@ -1,6 +1,6 @@
 <?php
 
-namespace Lazarus\Laravel\Facades;
+namespace Lazarus\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -11,7 +11,8 @@
   "require": {
     "php": "^8.0",
     "ext-zip": "*",
-    "illuminate/support": "^9.0"
+    "illuminate/support": "^9.0",
+    "whichbrowser/parser": "^2.1"
   },
   "require-dev": {
     "orchestra/testbench": "^7.5",
@@ -33,10 +34,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Lazarus\\Laravel\\LazarusServiceProvider"
+        "Lazarus\\LazarusServiceProvider"
       ],
       "aliases": {
-        "Lazarus": "Lazarus\\Laravel\\Facades\\Lazarus"
+        "Lazarus": "Lazarus\\Facades\\Lazarus"
       }
     }
   },

@@ -2,8 +2,8 @@
 
 namespace Lazarus\Tests;
 
-use Lazarus\Laravel\LazarusLogger;
-use Lazarus\Laravel\LazarusService;
+use Lazarus\LazarusLogger;
+use Lazarus\LazarusService;
 
 class LazarusLoggerTest extends TestCase
 {

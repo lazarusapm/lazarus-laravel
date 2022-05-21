@@ -2,8 +2,8 @@
 
 namespace Lazarus\Tests;
 
-use Lazarus\Laravel\Facades\Lazarus;
-use Lazarus\Laravel\LazarusServiceProvider;
+use Lazarus\Facades\Lazarus;
+use Lazarus\LazarusServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
